@@ -1,15 +1,15 @@
 services:
-  database:
-    image: postgres:14.20-trixie
-    container_name: todolist-db
-    shm_size: 128mb
-    environment:
-      POSTGRES_PASSWORD: q0M1d0X)uF[cg
-      POSTGRES_USER: postgres
-      POSTGRES_DB: todolist
-    ports:
-      - 5432:5432
-    volumes:
-      - pg_data:/var/lib/postgresql/data
+    database:
+        image: todolist-postgres:latest
+        container_name: todolist-db
+        shm_size: 128mb
+        environment:
+            POSTGRES_PASSWORD: q0M1d0X)uF[cg
+            POSTGRES_USER: postgres
+            POSTGRES_DB: todolist
+        ports:
+            - 5432:5432
+        volumes:
+            - pg_data:/var/lib/postgresql/data
 volumes:
-  pg_data:
+    pg_data:
