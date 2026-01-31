@@ -1,8 +1,8 @@
 CREATE TABLE users (
   "user_id" uuid NOT NULL PRIMARY KEY,
   "name" varchar(30) NOT NULL,
-  "email" varchar NOT NULL UNIQUE,
-  "password" varchar NOT NULL
+  "email" varchar(250) NOT NULL UNIQUE,
+  "password_hash" varchar NOT NULL
 );
 
 CREATE TABLE tasks (

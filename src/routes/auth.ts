@@ -21,7 +21,7 @@ authRoute.onError((error, c) => {
   }
 
   if (error instanceof DatabaseError) {
-    return c.json({ message: "Database operation failed" }, 500);
+    return c.json({ message: "Database error" }, 500);
   }
 
   if (error instanceof ZodError) {
@@ -54,7 +54,10 @@ authRoute.post("/register", async (c) => {
   };
 
   const token = await sign(payload, JWT_SECRET, "HS256");
-  setCookie(c, "auth_token", token);
+  setCookie(c, "auth_token", token, {
+    httpOnly: true,
+    sameSite: "Strict",
+  });
   return c.json({ message: "User created!" }, 201);
 });
 
@@ -71,7 +74,10 @@ authRoute.post("/login", async (c) => {
   };
 
   const token = await sign(payload, JWT_SECRET, "HS256");
-  setCookie(c, "auth_token", token);
+  setCookie(c, "auth_token", token, {
+    httpOnly: true,
+    sameSite: "Strict",
+  });
   return c.json({ message: "Logged!" });
 });
 

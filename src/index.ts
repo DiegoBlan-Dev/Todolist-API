@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import "dotenv/config";
 
 import { authRoute } from "./routes/auth.js";
+import { todoRoute } from "./routes/todo.js";
 
 const app = new Hono();
 
@@ -11,6 +12,8 @@ app.get("/", (c) => {
 });
 
 app.route("/", authRoute);
+
+app.route("/todos", todoRoute);
 
 serve(
   {

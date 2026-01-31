@@ -1,11 +1,13 @@
 import type { User, UserCredentials } from "../types/user.type.js";
-import { pool } from "../db/postgres.js";
+import { pool } from "../db/postgres/postgres.js";
 import bcrypt from "bcrypt";
 import { InvalidCredentials, UserNotFound } from "./errors/user.errors.js";
+import type { DBUser } from "../db/postgres/types.js";
+import { parseDbUser } from "../helpers/parseUser.js";
 
 export class UserModel {
   static async userExists(email: string) {
-    const user = await pool.query(
+    const query = await pool.query(
       `
         SELECT * FROM users
         WHERE email = $1
@@ -13,7 +15,12 @@ export class UserModel {
       [email],
     );
 
-    return user.rows[0] as User;
+    const user = query.rows[0] as DBUser;
+
+    if (user) {
+      const parsedUser = parseDbUser(user);
+      return parsedUser;
+    }
   }
 
   static async insertUser(user: User) {
@@ -27,7 +34,7 @@ export class UserModel {
 
     await pool.query(
       `
-      INSERT INTO users(user_id,name,email,password)
+      INSERT INTO users(user_id,name,email,password_hash)
       VALUES ($1,$2,$3,$4)
       `,
       [id, name, email, hashPassword],
