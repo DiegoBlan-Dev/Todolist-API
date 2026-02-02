@@ -2,7 +2,7 @@
   "name": "todolist-api",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch src/v1/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },

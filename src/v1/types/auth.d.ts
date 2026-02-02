@@ -1,11 +1,10 @@
-export type User = {
-  id?: string;
+export interface RegisterDTO {
   name: string;
   email: string;
   password: string;
-};
+}
 
-export type UserCredentials = {
+export interface LoginDTO {
   email: string;
   password: string;
-};
+}
